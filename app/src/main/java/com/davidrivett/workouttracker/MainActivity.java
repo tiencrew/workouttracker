@@ -9,10 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import com.davidrivett.workouttracker.data.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,6 +32,16 @@ public class MainActivity extends ActionBarActivity {
     @OnClick(R.id.fabBtn)
     void onClick()
     {
+        //Create User
+
+
+        realm.beginTransaction();
+        User user = realm.createObject(User.class); // Create a new object
+        user.setName("John");
+        realm.commitTransaction();
+
+        getUserQuery();
+
         Snackbar.make(rootLayout, "Test Snack Bar", Snackbar.LENGTH_SHORT)
                 .setAction("Undo", new View.OnClickListener() {
                     @Override
@@ -40,6 +56,11 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
+    @InjectView(R.id.sampleTxt)
+    TextView sampleTxt;
+
+
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +70,30 @@ public class MainActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         setSupportActionBar(toolbar);
+
+        // Obtain a Realm instance
+        realm = Realm.getInstance(this);
+
+        getUserQuery();
+    }
+
+    void getUserQuery()
+    {
+
+        RealmQuery<User> query = realm.where(User.class);
+
+        RealmResults<User> result = query.findAll();
+
+        String holdVal = "";
+
+        for (int i = 0; i < result.size(); i++)
+        {
+            holdVal += result.get(0).getName();
+            holdVal += "\n";
+        }
+
+        sampleTxt.setText(holdVal);
+        
     }
 
 

@@ -5,8 +5,6 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-
-
     <android.support.design.widget.CoordinatorLayout
             android:id="@+id/rootLayout"
             android:layout_width="match_parent"
@@ -29,6 +27,17 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+            <TextView
+                android:id="@+id/sampleTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabBtn"
             android:layout_width="wrap_content"
